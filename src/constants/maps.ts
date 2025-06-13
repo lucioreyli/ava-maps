@@ -1,4 +1,4 @@
-[
+export const maps = [
   {
     "name": "Ouyos-Aoeuam",
     "tier": "T4",
