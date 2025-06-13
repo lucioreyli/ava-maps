@@ -43,14 +43,9 @@ const MinimapItem = ({
 export const MapItem = ({
   map,
   style,
-}: { map: AvaMap } & React.ComponentProps<'div'>) => {
+}: { map: AvaMap } & Pick<React.ComponentProps<'div'>, 'style'>) => {
   return (
     <div className={cn(itemStyle({ tier: map.tier }))} style={style}>
-      <img
-        className="size-8 md:size-24 rounded-md"
-        src={`/maps/${map.name.toLowerCase()}.png`}
-        alt={map.name}
-      />
       <span className="font-medium">
         {map.name} ({x({ tier: map.tier })})
       </span>

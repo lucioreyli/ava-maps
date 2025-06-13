@@ -23,10 +23,7 @@ function RouteComponent() {
     () => searcher(search.n || ''),
     [search, searcher],
   );
-  // The scrollable element for your list
   const parentRef = React.useRef(null);
-
-  // The virtualizer
   const rowVirtualizer = useVirtualizer({
     count: search.n ? data.length : maps.length,
     getScrollElement: () => parentRef.current,
