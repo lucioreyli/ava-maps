@@ -50,7 +50,7 @@ export const MapItem = ({
         {map.name} ({x({ tier: map.tier })})
       </span>
       <div className="ml-auto inline-flex gap-1.5">
-        <div className="grid border p-2 rounded-sm">
+        <div className="grid border p-2 rounded-sm bg-white/5">
           <span className="font-medium text-xs text-muted-foreground">
             Resources
           </span>
@@ -62,7 +62,7 @@ export const MapItem = ({
             <MinimapItem itemName="rock" stack={map.resources.rock} />
           </ul>
         </div>
-        <div className="grid border p-2 rounded-sm">
+        <div className="grid border p-2 rounded-sm bg-white/5">
           <span className="font-medium text-xs text-muted-foreground">
             Dungeons
           </span>
@@ -72,7 +72,7 @@ export const MapItem = ({
             <MinimapItem stack={map.dungeons.avalon} itemName="dg-ava" />
           </ul>
         </div>
-        <div className="grid border p-2 rounded-sm">
+        <div className="grid border p-2 rounded-sm bg-white/5">
           <span className="font-medium text-xs text-muted-foreground">
             Chests
           </span>
@@ -86,7 +86,7 @@ export const MapItem = ({
           </ul>
         </div>
 
-        <div className="grid border p-2 rounded-sm">
+        <div className="grid border p-2 rounded-sm bg-white/5">
           <span className="font-medium text-xs text-muted-foreground">
             Extras
           </span>
