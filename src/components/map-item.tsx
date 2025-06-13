@@ -9,7 +9,7 @@ const x = cva('', {
   },
 });
 
-const style = cva('p-8 border rounded-md flex items-center gap-4', {
+const itemStyle = cva('p-8 border rounded-md flex items-center gap-4 mb-2', {
   variants: {
     tier: {
       T4: 'bg-indigo-700/20',
@@ -40,9 +40,12 @@ const MinimapItem = ({
   </li>
 );
 
-export const MapItem = ({ map }: { map: AvaMap }) => {
+export const MapItem = ({
+  map,
+  style,
+}: { map: AvaMap } & React.ComponentProps<'div'>) => {
   return (
-    <div className={cn(style({ tier: map.tier }))}>
+    <div className={cn(itemStyle({ tier: map.tier }))} style={style}>
       <img
         className="size-8 md:size-24 rounded-md"
         src={`/maps/${map.name.toLowerCase()}.png`}

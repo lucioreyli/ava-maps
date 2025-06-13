@@ -4,11 +4,21 @@ import React from 'react';
 import createFuzzySearch from '@nozbe/microfuzz';
 import { MapItem } from '@/components/map-item.tsx';
 import { object, string } from 'zod';
+import { FixedSizeList as List } from 'react-window';
+import type { AvaMap } from '@/types.ts';
 
 export const Route = createFileRoute({
   component: RouteComponent,
   validateSearch: object({ n: string().optional().catch('') }),
 });
+
+const Row = ({
+  index,
+  style,
+  data,
+}: { index: number; data: AvaMap[] } & React.ComponentProps<'div'>) => (
+  <MapItem style={style} map={data[index]} />
+);
 
 function RouteComponent() {
   const search = Route.useSearch();
@@ -22,6 +32,7 @@ function RouteComponent() {
     () => searcher(search.n || ''),
     [search, searcher],
   );
+
   return (
     <main className="p-4 md:p-8 space-y-4">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
@@ -30,6 +41,7 @@ function RouteComponent() {
       <div className="flex gap-1.5">
         <Input
           placeholder="Search avalon name..."
+          defaultValue={search.n}
           onChange={(e) => {
             if (timer.current) clearTimeout(timer.current);
             const txt = e.target.value;
@@ -41,11 +53,16 @@ function RouteComponent() {
         />
       </div>
 
-      <div className="max-h-screen space-y-2">
-        {search.n !== ''
-          ? data.map(({ item: map }) => <MapItem map={map} key={map.name} />)
-          : maps.map((map) => <MapItem map={map} key={map.name} />)}
-      </div>
+      <List
+        width="100%"
+        itemCount={search.n !== '' ? data.length : maps.length}
+        itemSize={180}
+        height={600}
+        itemData={search.n !== '' ? data.map((i) => i.item) : maps}
+        className="gap-2 space-y-2 px-8"
+      >
+        {Row}
+      </List>
     </main>
   );
 }
