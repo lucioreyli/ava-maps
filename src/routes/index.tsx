@@ -36,7 +36,7 @@ function RouteComponent() {
   );
 
   return (
-    <main className="p-4 md:p-8 space-y-4">
+    <main className="p-4 md:p-8 space-y-4 grid justify-center overflow-hidden h-dvh">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
         Avalon Maps
       </h1>
@@ -54,9 +54,13 @@ function RouteComponent() {
           }}
         />
       </div>
-
+      {search.n && !data.length && (
+        <p className="text-center text-sm text-muted-foreground">
+          No results for "{search.n}".
+        </p>
+      )}
       <List
-        width="100%"
+        width="90vw"
         itemCount={search.n !== '' ? data.length : maps.length}
         itemSize={175}
         height={550}
