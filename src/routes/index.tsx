@@ -2,6 +2,7 @@ import { maps } from '@/constants/maps';
 import { Input } from '@/components/ui/input.tsx';
 import React from 'react';
 import createFuzzySearch from '@nozbe/microfuzz';
+import { MapItem } from '@/components/map-item.tsx';
 
 export const Route = createFileRoute({ component: RouteComponent });
 
@@ -29,33 +30,9 @@ function RouteComponent() {
         }}
       />
       <div className="max-h-screen space-y-2">
-        {!data.length &&
-          maps.map((map) => (
-            <div
-              className="p-8 border rounded-md flex items-center gap-4"
-              key={map.name}
-            >
-              <img
-                className="size-8 md:size-12 rounded-md"
-                src={`/maps/${map.name.toLowerCase()}.png`}
-                alt={map.name}
-              />
-              {map.name}
-            </div>
-          ))}
-        {data.map(({ item: map }) => (
-          <div
-            className="p-8 border rounded-md flex items-center gap-4"
-            key={`search-${map.name}`}
-          >
-            <img
-              className="size-8 md:size-12 rounded-md"
-              src={`/maps/${map.name.toLowerCase()}.png`}
-              alt={map.name}
-            />
-            {map.name}
-          </div>
-        ))}
+        {data.length
+          ? data.map(({ item: map }) => <MapItem map={map} key={map.name} />)
+          : maps.map((map) => <MapItem map={map} key={map.name} />)}
       </div>
     </main>
   );
