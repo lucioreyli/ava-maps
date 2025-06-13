@@ -4,23 +4,12 @@ import React from 'react';
 import createFuzzySearch from '@nozbe/microfuzz';
 import { MapItem } from '@/components/map-item.tsx';
 import { object, string } from 'zod';
-import { FixedSizeList as List } from 'react-window';
-import type { AvaMap } from '@/types.ts';
+import { useVirtualizer } from '@tanstack/react-virtual';
 
 export const Route = createFileRoute({
   component: RouteComponent,
   validateSearch: object({ n: string().optional().catch('') }),
 });
-
-const Row = ({
-  index,
-  style,
-  data,
-}: { index: number; data: AvaMap[] } & React.ComponentProps<'div'>) => (
-  <div style={style}>
-    <MapItem map={data[index]} />
-  </div>
-);
 
 function RouteComponent() {
   const search = Route.useSearch();
@@ -34,9 +23,18 @@ function RouteComponent() {
     () => searcher(search.n || ''),
     [search, searcher],
   );
+  // The scrollable element for your list
+  const parentRef = React.useRef(null);
+
+  // The virtualizer
+  const rowVirtualizer = useVirtualizer({
+    count: search.n ? data.length : maps.length,
+    getScrollElement: () => parentRef.current,
+    estimateSize: () => 175,
+  });
 
   return (
-    <main className="p-4 md:p-8 space-y-4 grid justify-center overflow-hidden h-dvh">
+    <main className="px-4 md:px-8 space-y-4 overflow-hidden grid h-dvh">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
         Avalon Maps
       </h1>
@@ -59,15 +57,41 @@ function RouteComponent() {
           No results for "{search.n}".
         </p>
       )}
-      <List
-        width="90vw"
-        itemCount={search.n !== '' ? data.length : maps.length}
-        itemSize={175}
-        height={550}
-        itemData={search.n !== '' ? data.map((i) => i.item) : maps}
+      <div
+        ref={parentRef}
+        style={{ height: '100%', flex: 1, overflow: 'auto', width: '100%' }}
       >
-        {Row}
-      </List>
+        <div
+          style={{
+            height: `${rowVirtualizer.getTotalSize()}px`,
+            width: '100%',
+            position: 'relative',
+          }}
+        >
+          {/* Only the visible items in the virtualizer, manually positioned to be in view */}
+          {rowVirtualizer.getVirtualItems().map((virtualItem) => (
+            <div
+              key={virtualItem.key}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: `${virtualItem.size}px`,
+                transform: `translateY(${virtualItem.start}px)`,
+              }}
+            >
+              <MapItem
+                map={
+                  search.n
+                    ? data[virtualItem.index]?.item
+                    : maps[virtualItem.index]
+                }
+              />
+            </div>
+          ))}
+        </div>
+      </div>
     </main>
   );
 }
