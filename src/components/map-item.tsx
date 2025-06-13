@@ -9,7 +9,7 @@ const x = cva('', {
   },
 });
 
-const itemStyle = cva('p-8 border rounded-md flex items-center gap-4 mb-2', {
+const itemStyle = cva('p-8 border rounded-md flex items-center gap-4', {
   variants: {
     tier: {
       T4: 'bg-indigo-700/20',

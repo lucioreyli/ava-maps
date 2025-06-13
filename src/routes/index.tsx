@@ -17,7 +17,9 @@ const Row = ({
   style,
   data,
 }: { index: number; data: AvaMap[] } & React.ComponentProps<'div'>) => (
-  <MapItem style={style} map={data[index]} />
+  <div style={style}>
+    <MapItem map={data[index]} />
+  </div>
 );
 
 function RouteComponent() {
@@ -56,10 +58,9 @@ function RouteComponent() {
       <List
         width="100%"
         itemCount={search.n !== '' ? data.length : maps.length}
-        itemSize={180}
-        height={600}
+        itemSize={175}
+        height={550}
         itemData={search.n !== '' ? data.map((i) => i.item) : maps}
-        className="gap-2 space-y-2 px-8"
       >
         {Row}
       </List>
