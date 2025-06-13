@@ -24,10 +24,7 @@ function RouteComponent() {
       </h1>
       <Input
         placeholder="Search avalon name..."
-        onChange={(e) => {
-          const txt = e.target.value;
-          navigate({ to: '.', search: { n: txt } });
-        }}
+        onChange={(e) => navigate({ to: '.', search: { n: e.target.value } })}
       />
       <div className="max-h-screen space-y-2">
         {data.length
