@@ -9,6 +9,7 @@ export const Route = createFileRoute({ component: RouteComponent });
 function RouteComponent() {
   const search = Route.useSearch();
   const navigate = Route.useNavigate();
+  const timer = React.useRef<number>(null);
   const searcher = React.useMemo(
     () => createFuzzySearch(maps, { key: 'name' }),
     [],
@@ -24,7 +25,14 @@ function RouteComponent() {
       </h1>
       <Input
         placeholder="Search avalon name..."
-        onChange={(e) => navigate({ to: '.', search: { n: e.target.value } })}
+        onChange={(e) => {
+          if (timer.current) {
+            clearTimeout(timer.current);
+          }
+          timer.current = setTimeout(() => {
+            navigate({ to: '.', search: { n: e.target.value } });
+          }, 200);
+        }}
       />
       <div className="max-h-screen space-y-2">
         {data.length
