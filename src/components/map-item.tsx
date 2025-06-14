@@ -1,16 +1,16 @@
-import type { AvaMap } from '@/types.ts';
-import { cva } from 'class-variance-authority';
-import { cn } from '@/lib/utils.ts';
 import { Badge } from '@/components/ui/badge.tsx';
+import { Button } from '@/components/ui/button.tsx';
 import {
   Dialog,
   DialogContent,
+  DialogDescription,
+  DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogHeader,
-  DialogDescription,
 } from '@/components/ui/dialog.tsx';
-import { Button } from '@/components/ui/button.tsx';
+import { cn } from '@/lib/utils.ts';
+import type { AvaMap } from '@/types.ts';
+import { cva } from 'class-variance-authority';
 import { MapIcon } from 'lucide-react';
 
 const mapTier = { T4: 'IV', T6: 'VI', T8: 'VIII' } as Record<string, string>;

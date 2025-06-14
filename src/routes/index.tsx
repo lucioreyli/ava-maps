@@ -1,11 +1,11 @@
-import { maps } from '@/constants/maps';
-import { Input } from '@/components/ui/input.tsx';
-import React from 'react';
-import createFuzzySearch from '@nozbe/microfuzz';
 import { MapItem } from '@/components/map-item.tsx';
-import { object, string } from 'zod';
-import { useVirtualizer } from '@tanstack/react-virtual';
+import { Input } from '@/components/ui/input.tsx';
+import { maps } from '@/constants/maps';
 import { useIsMobile } from '@/hooks/use-is-mobile.ts';
+import createFuzzySearch from '@nozbe/microfuzz';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import React from 'react';
+import { object, string } from 'zod';
 
 export const Route = createFileRoute({
   component: RouteComponent,
