@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [pluginReact()],
   html: { title: 'Avalon Maps' },
   output: { assetPrefix: '/ava-maps/' },
+  server: { base: '/ava-maps/' },
   tools: {
     rspack: {
       plugins: [

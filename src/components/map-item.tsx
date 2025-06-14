@@ -2,6 +2,15 @@ import type { AvaMap } from '@/types.ts';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils.ts';
 import { Badge } from '@/components/ui/badge.tsx';
+import React from 'react';
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogTrigger,
+  DialogDescription,
+  DialogHeader,
+} from '@/components/ui/dialog.tsx';
 
 const x = cva('', {
   variants: {
@@ -46,9 +55,23 @@ export const MapItem = ({
 }: { map: AvaMap } & Pick<React.ComponentProps<'div'>, 'style'>) => {
   return (
     <div className={cn(itemStyle({ tier: map.tier }))} style={style}>
-      <span className="font-medium">
-        {map.name} ({x({ tier: map.tier })})
-      </span>
+      <Dialog>
+        <DialogTrigger>
+          <span className="font-medium">
+            {map.name} ({x({ tier: map.tier })})
+          </span>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{map.name}</DialogTitle>
+            <img
+              src={`./maps/${map.name.toLowerCase()}.png`}
+              alt="map"
+              className="size-96 aspect-square"
+            />
+          </DialogHeader>
+        </DialogContent>
+      </Dialog>
       <div className="ml-auto inline-flex gap-1.5">
         <div className="grid border p-2 rounded-sm bg-white/5">
           <span className="font-medium text-xs text-muted-foreground">

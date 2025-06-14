@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@nozbe/microfuzz": "^1.0.0",
+    "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-slot": "^1.2.3",
     "@tanstack/react-router": "^1.121.2",
     "@tanstack/react-router-devtools": "^1.121.5",
