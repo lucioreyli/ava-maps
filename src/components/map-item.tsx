@@ -2,14 +2,13 @@ import type { AvaMap } from '@/types.ts';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/utils.ts';
 import { Badge } from '@/components/ui/badge.tsx';
-import React from 'react';
 import {
   Dialog,
   DialogContent,
   DialogTitle,
   DialogTrigger,
-  DialogDescription,
   DialogHeader,
+  DialogDescription,
 } from '@/components/ui/dialog.tsx';
 
 const x = cva('', {
@@ -64,6 +63,7 @@ export const MapItem = ({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{map.name}</DialogTitle>
+            <DialogDescription>{map.type}</DialogDescription>
             <img
               src={`./maps/${map.name.toLowerCase()}.png`}
               alt="map"
