@@ -5,6 +5,7 @@ import createFuzzySearch from '@nozbe/microfuzz';
 import { MapItem } from '@/components/map-item.tsx';
 import { object, string } from 'zod';
 import { useVirtualizer } from '@tanstack/react-virtual';
+import { useIsMobile } from '@/hooks/use-is-mobile.ts';
 
 export const Route = createFileRoute({
   component: RouteComponent,
@@ -23,11 +24,15 @@ function RouteComponent() {
     () => searcher(search.n || ''),
     [search, searcher],
   );
+
+  const isMobile = useIsMobile();
+  console.log(isMobile);
   const parentRef = React.useRef(null);
   const rowVirtualizer = useVirtualizer({
     count: search.n ? data.length : maps.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => 175,
+    estimateSize: () => (isMobile ? 300 : 175),
+    overscan: 5,
   });
 
   return (
@@ -65,15 +70,11 @@ function RouteComponent() {
             position: 'relative',
           }}
         >
-          {/* Only the visible items in the virtualizer, manually positioned to be in view */}
           {rowVirtualizer.getVirtualItems().map((virtualItem) => (
             <div
               key={virtualItem.key}
+              className="absolute inset-0 w-full"
               style={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100%',
                 height: `${virtualItem.size}px`,
                 transform: `translateY(${virtualItem.start}px)`,
               }}

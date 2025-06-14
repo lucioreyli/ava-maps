@@ -10,14 +10,12 @@ import {
   DialogHeader,
   DialogDescription,
 } from '@/components/ui/dialog.tsx';
+import { Button } from '@/components/ui/button.tsx';
+import { MapIcon } from 'lucide-react';
 
-const x = cva('', {
-  variants: {
-    tier: { T4: 'IV', T6: 'VI', T8: 'VIII' } as Record<string, string>,
-  },
-});
+const mapTier = { T4: 'IV', T6: 'VI', T8: 'VIII' } as Record<string, string>;
 
-const itemStyle = cva('p-8 border rounded-md flex items-center gap-4', {
+const itemStyle = cva('p-8 border rounded-md md:flex items-center gap-4', {
   variants: {
     tier: {
       T4: 'bg-indigo-700/20',
@@ -53,12 +51,15 @@ export const MapItem = ({
   style,
 }: { map: AvaMap } & Pick<React.ComponentProps<'div'>, 'style'>) => {
   return (
-    <div className={cn(itemStyle({ tier: map.tier }))} style={style}>
-      <Dialog>
-        <DialogTrigger>
+    <Dialog>
+      <div className={cn(itemStyle({ tier: map.tier }))} style={style}>
+        <DialogTrigger className="flex gap-x-2 items-center max-md:mb-2">
           <span className="font-medium">
-            {map.name} ({x({ tier: map.tier })})
+            {map.name} ({mapTier[map.tier]})
           </span>
+          <Button variant="outline" className="my-auto md:hidden">
+            <MapIcon />
+          </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
@@ -71,53 +72,58 @@ export const MapItem = ({
             />
           </DialogHeader>
         </DialogContent>
-      </Dialog>
-      <div className="ml-auto inline-flex gap-1.5">
-        <div className="grid border p-2 rounded-sm bg-white/5">
-          <span className="font-medium text-xs text-muted-foreground">
-            Resources
-          </span>
-          <ul className="flex">
-            <MinimapItem itemName="hide" stack={map.resources.hide} />
-            <MinimapItem itemName="fiber" stack={map.resources.fiber} />
-            <MinimapItem itemName="wood" stack={map.resources.wood} />
-            <MinimapItem itemName="ore" stack={map.resources.ore} />
-            <MinimapItem itemName="rock" stack={map.resources.rock} />
-          </ul>
-        </div>
-        <div className="grid border p-2 rounded-sm bg-white/5">
-          <span className="font-medium text-xs text-muted-foreground">
-            Dungeons
-          </span>
-          <ul className="flex gap-2">
-            <MinimapItem stack={map.dungeons.solo} itemName="dg-solo" />
-            <MinimapItem stack={map.dungeons.group} itemName="dg-group" />
-            <MinimapItem stack={map.dungeons.avalon} itemName="dg-ava" />
-          </ul>
-        </div>
-        <div className="grid border p-2 rounded-sm bg-white/5">
-          <span className="font-medium text-xs text-muted-foreground">
-            Chests
-          </span>
-          <ul className="flex gap-2">
-            <MinimapItem stack={map.chests.green} itemName="green-chest" />
-            <MinimapItem stack={map.chests.blue} itemName="blue-chest" />
-            <MinimapItem
-              stack={map.chests.highGold + map.chests.lowGold}
-              itemName="gold-chest"
-            />
-          </ul>
-        </div>
+        <div className="ml-auto grid grid-cols-2 md:inline-flex gap-1.5">
+          <div className="grid border p-2 rounded-sm bg-white/5">
+            <span className="font-medium text-xs text-muted-foreground">
+              Resources
+            </span>
+            <ul className="flex">
+              <MinimapItem itemName="hide" stack={map.resources.hide} />
+              <MinimapItem itemName="fiber" stack={map.resources.fiber} />
+              <MinimapItem itemName="wood" stack={map.resources.wood} />
+              <MinimapItem itemName="ore" stack={map.resources.ore} />
+              <MinimapItem itemName="rock" stack={map.resources.rock} />
+            </ul>
+          </div>
+          <div className="grid border p-2 rounded-sm bg-white/5">
+            <span className="font-medium text-xs text-muted-foreground">
+              Dungeons
+            </span>
+            <ul className="flex gap-2">
+              <MinimapItem stack={map.dungeons.solo} itemName="dg-solo" />
+              <MinimapItem stack={map.dungeons.group} itemName="dg-group" />
+              <MinimapItem stack={map.dungeons.avalon} itemName="dg-ava" />
+            </ul>
+          </div>
+          <div className="grid border p-2 rounded-sm bg-white/5">
+            <span className="font-medium text-xs text-muted-foreground">
+              Chests
+            </span>
+            <ul className="flex gap-2">
+              <MinimapItem stack={map.chests.green} itemName="green-chest" />
+              <MinimapItem stack={map.chests.blue} itemName="blue-chest" />
+              <MinimapItem
+                stack={map.chests.highGold + map.chests.lowGold}
+                itemName="gold-chest"
+              />
+            </ul>
+          </div>
 
-        <div className="grid border p-2 rounded-sm bg-white/5">
-          <span className="font-medium text-xs text-muted-foreground">
-            Extras
-          </span>
-          <ul className="flex gap-2">
-            <MinimapItem stack={map.brecilien} itemName="brecilien" />
-          </ul>
+          <div className="grid border p-2 rounded-sm bg-white/5">
+            <span className="font-medium text-xs text-muted-foreground">
+              Extras
+            </span>
+            <ul className="flex gap-2">
+              <MinimapItem stack={map.brecilien} itemName="brecilien" />
+            </ul>
+          </div>
+          <DialogTrigger asChild>
+            <Button variant="outline" className="my-auto max-md:hidden">
+              <MapIcon />
+            </Button>
+          </DialogTrigger>
         </div>
       </div>
-    </div>
+    </Dialog>
   );
 };
