@@ -4,7 +4,7 @@ import { createRouter, RouterProvider } from '@tanstack/react-router';
 import { routeTree } from './routeTree.gen.ts';
 import './index.css';
 
-const router = createRouter({ routeTree });
+const router = createRouter({ routeTree, basepath: '/ava-maps/' });
 
 const rootEl = document.getElementById('root');
 document.body.classList.add('dark');
