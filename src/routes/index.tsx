@@ -36,7 +36,7 @@ function RouteComponent() {
   });
 
   return (
-    <main className="px-4 md:px-8 space-y-4 overflow-hidden h-dvh">
+    <main className="px-4 md:px-8 space-y-4 h-screen grid content-start">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
         Avalon Maps
       </h1>
@@ -62,7 +62,8 @@ function RouteComponent() {
       )}
       <div
         ref={parentRef}
-        style={{ height: '100%', flex: 1, overflow: 'auto', width: '100%' }}
+        // style={{ height: '100%', flex: 1, overflow: 'auto', width: '100%' }}
+        className="h-full overflow-auto w-full pb-12"
       >
         <div
           style={{
