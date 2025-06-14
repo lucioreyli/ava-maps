@@ -5,6 +5,7 @@ import { TanStackRouterRspack } from '@tanstack/router-plugin/rspack';
 export default defineConfig({
   plugins: [pluginReact()],
   html: { title: 'Avalon Maps' },
+  output: { assetPrefix: 'ava-maps' },
   tools: {
     rspack: {
       plugins: [
