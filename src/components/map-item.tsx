@@ -54,9 +54,12 @@ export const MapItem = ({
     <Dialog>
       <div className={cn(itemStyle({ tier: map.tier }))} style={style}>
         <DialogTrigger className="flex gap-x-2 items-center max-md:mb-2">
-          <span className="font-medium">
+          <p className="font-medium">
             {map.name} ({mapTier[map.tier]})
-          </span>
+            <span className="text-xs text-muted-foreground block">
+              {map.type}
+            </span>
+          </p>
           <Button variant="outline" className="my-auto md:hidden">
             <MapIcon />
           </Button>

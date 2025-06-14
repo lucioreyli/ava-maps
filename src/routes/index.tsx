@@ -31,7 +31,7 @@ function RouteComponent() {
   const rowVirtualizer = useVirtualizer({
     count: search.n ? data.length : maps.length,
     getScrollElement: () => parentRef.current,
-    estimateSize: () => (isMobile ? 300 : 175),
+    estimateSize: () => (isMobile ? 300 : 160),
     overscan: 5,
   });
 
