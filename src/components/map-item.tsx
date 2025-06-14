@@ -31,7 +31,7 @@ const MinimapItem = ({
       {stack}
     </Badge>
     <img
-      src={`/assets/${itemName}.webp`}
+      src={`./assets/${itemName}.webp`}
       alt={itemName}
       aria-label={itemName}
       data-disabled={!stack}
