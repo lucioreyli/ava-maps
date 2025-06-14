@@ -36,12 +36,13 @@ function RouteComponent() {
   });
 
   return (
-    <main className="px-4 md:px-8 space-y-4 overflow-hidden grid h-dvh">
+    <main className="px-4 md:px-8 space-y-4 overflow-hidden h-dvh">
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
         Avalon Maps
       </h1>
       <div className="flex gap-1.5">
         <Input
+          type="search"
           placeholder="Search avalon name..."
           defaultValue={search.n}
           onChange={(e) => {
