@@ -17,3 +17,5 @@ dist/
 
 # routes
 routeTree.gen.ts
+
+.tanstack
