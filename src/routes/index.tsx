@@ -9,7 +9,7 @@ import { object, string } from 'zod';
 
 export const Route = createFileRoute({
   component: RouteComponent,
-  validateSearch: object({ n: string().optional().catch('') }),
+  validateSearch: object({ n: string().catch('') }),
 });
 
 function RouteComponent() {
