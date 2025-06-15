@@ -27,10 +27,10 @@ jobs:
           bun-version: latest
 
       - name: Check Typescript
-        uses: bun tsc
+        run: bun tsc
 
       - name: Check Biome
-        uses: bun run check
+        run: bun run check
 
   build:
     runs-on: ubuntu-latest
