@@ -20,10 +20,7 @@ function RouteComponent() {
     () => createFuzzySearch(maps, { key: 'name', strategy: 'aggressive' }),
     [],
   );
-  const data = React.useMemo(
-    () => searcher(search.n || ''),
-    [search, searcher],
-  );
+  const data = React.useMemo(() => searcher(search.n), [search, searcher]);
 
   const isMobile = useIsMobile();
   console.log(isMobile);
@@ -49,7 +46,7 @@ function RouteComponent() {
             if (timer.current) clearTimeout(timer.current);
             const txt = e.target.value;
             timer.current = setTimeout(
-              () => navigate({ to: '.', search: { n: txt } }),
+              () => navigate({ to: '.', search: txt ? { n: txt } : {} }),
               txt === '' ? 0 : 200,
             );
           }}
