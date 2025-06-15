@@ -26,6 +26,9 @@ jobs:
         with:
           bun-version: latest
 
+      - name: Install dependencies
+        run: bun i
+
       - name: Check Typescript
         run: bun tsc
 
