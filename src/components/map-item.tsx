@@ -1,4 +1,3 @@
-import { Badge } from '@/components/ui/badge.tsx';
 import { Button } from '@/components/ui/button.tsx';
 import {
   Dialog,
@@ -12,6 +11,7 @@ import { cn } from '@/lib/utils.ts';
 import type { AvaMap } from '@/types.ts';
 import { cva } from 'class-variance-authority';
 import { MapIcon } from 'lucide-react';
+import { MinimapItem } from './minimap-item';
 
 const mapTier = { T4: 'IV', T6: 'VI', T8: 'VIII' } as Record<string, string>;
 
@@ -24,27 +24,6 @@ const itemStyle = cva('p-8 border rounded-md md:flex items-center gap-4', {
     } as Record<string, string>,
   },
 });
-
-const MinimapItem = ({
-  stack,
-  itemName,
-}: { stack: number; itemName: string }) => (
-  <li className="relative">
-    <Badge
-      data-disabled={stack < 2}
-      className="data-[disabled=true]:hidden absolute top-1 right-1 h-5 min-w-5 rounded-full px-1 tabular-nums"
-    >
-      {stack}
-    </Badge>
-    <img
-      src={`./assets/${itemName}.webp`}
-      alt={itemName}
-      aria-label={itemName}
-      data-disabled={!stack}
-      className="data-[disabled=true]:grayscale-100 data-[disabled=true]:opacity-50 size-12 aspect-square"
-    />
-  </li>
-);
 
 export const MapItem = ({
   map,
@@ -71,7 +50,8 @@ export const MapItem = ({
             <img
               src={`./maps/${map.name.toLowerCase()}.png`}
               alt="map"
-              className="w-full rounded-sm"
+              className="w-full h-full rounded-sm"
+              loading="eager"
             />
           </DialogHeader>
         </DialogContent>
