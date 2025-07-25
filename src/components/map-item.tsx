@@ -71,7 +71,7 @@ export const MapItem = ({
             <img
               src={`./maps/${map.name.toLowerCase()}.png`}
               alt="map"
-              className="size-96 aspect-square"
+              className="w-full rounded-sm"
             />
           </DialogHeader>
         </DialogContent>
