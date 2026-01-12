@@ -1,13 +1,16 @@
-import { RouterProvider, createRouter } from '@tanstack/react-router';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { routeTree } from './routeTree.gen.ts';
+import { RouterProvider, createBrowserRouter } from 'react-router';
+import { RootPage } from './routes';
 import './index.css';
-
-const router = createRouter({ routeTree, basepath: '/ava-maps/' });
 
 const rootEl = document.getElementById('root');
 document.body.classList.add('dark');
+
+const router = createBrowserRouter([
+  { path: '/ava-maps/', Component: RootPage },
+]);
+
 if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
   root.render(

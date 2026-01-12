@@ -1,32 +1,25 @@
 import { MapItem } from '@/components/map-item.tsx';
-import { Input } from '@/components/ui/input.tsx';
+import { SearchMap } from '@/components/search-map';
 import { maps } from '@/constants/maps';
 import { useIsMobile } from '@/hooks/use-is-mobile.ts';
 import createFuzzySearch from '@nozbe/microfuzz';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import React from 'react';
-import { object, string } from 'zod';
+import { useSearchParams } from 'react-router';
 
-export const Route = createFileRoute({
-  component: RouteComponent,
-  validateSearch: object({ n: string().catch('') }),
-});
-
-function RouteComponent() {
-  const search = Route.useSearch();
-  const navigate = Route.useNavigate();
-  const timer = React.useRef<number>(null);
+export function RootPage() {
+  const [sp] = useSearchParams();
+  const term = sp.get('s') ?? '';
   const searcher = React.useMemo(
     () => createFuzzySearch(maps, { key: 'name', strategy: 'aggressive' }),
     [],
   );
-  const data = React.useMemo(() => searcher(search.n), [search, searcher]);
+  const data = React.useMemo(() => searcher(sp.get('s')), [sp, searcher]);
 
   const isMobile = useIsMobile();
-  console.log(isMobile);
   const parentRef = React.useRef(null);
   const rowVirtualizer = useVirtualizer({
-    count: search.n ? data.length : maps.length,
+    count: term ? data.length : maps.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => (isMobile ? 300 : 160),
     overscan: 5,
@@ -37,24 +30,10 @@ function RouteComponent() {
       <h1 className="scroll-m-20 text-center text-4xl font-extrabold tracking-tight text-balance">
         Avalon Maps
       </h1>
-      <div className="flex gap-1.5">
-        <Input
-          type="search"
-          placeholder="Search avalon name..."
-          defaultValue={search.n}
-          onChange={(e) => {
-            if (timer.current) clearTimeout(timer.current);
-            const txt = e.target.value;
-            timer.current = setTimeout(
-              () => navigate({ to: '.', search: txt ? { n: txt } : {} }),
-              txt === '' ? 0 : 200,
-            );
-          }}
-        />
-      </div>
-      {search.n && !data.length && (
+      <SearchMap />
+      {term && !data.length && (
         <p className="text-center text-sm text-muted-foreground">
-          No results for "{search.n}".
+          No results for "{term}".
         </p>
       )}
       <div
@@ -80,9 +59,7 @@ function RouteComponent() {
             >
               <MapItem
                 map={
-                  search.n
-                    ? data[virtualItem.index]?.item
-                    : maps[virtualItem.index]
+                  term ? data[virtualItem.index]?.item : maps[virtualItem.index]
                 }
               />
             </div>
