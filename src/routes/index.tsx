@@ -4,20 +4,20 @@ import { maps } from '@/constants/maps';
 import { useIsMobile } from '@/hooks/use-is-mobile.ts';
 import createFuzzySearch from '@nozbe/microfuzz';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import React from 'react';
 import { useSearchParams } from 'react-router';
+import { useMemo, useRef } from 'react';
 
 export function RootPage() {
   const [sp] = useSearchParams();
   const term = sp.get('s') ?? '';
-  const searcher = React.useMemo(
+  const searcher = useMemo(
     () => createFuzzySearch(maps, { key: 'name', strategy: 'aggressive' }),
     [],
   );
-  const data = React.useMemo(() => searcher(sp.get('s') || ''), [sp, searcher]);
+  const data = useMemo(() => searcher(sp.get('s') || ''), [sp, searcher]);
 
   const isMobile = useIsMobile();
-  const parentRef = React.useRef(null);
+  const parentRef = useRef(null);
   const rowVirtualizer = useVirtualizer({
     count: term ? data.length : maps.length,
     getScrollElement: () => parentRef.current,
