@@ -4,8 +4,8 @@ import { maps } from '@/constants/maps';
 import { useIsMobile } from '@/hooks/use-is-mobile.ts';
 import createFuzzySearch from '@nozbe/microfuzz';
 import { useVirtualizer } from '@tanstack/react-virtual';
-import { useSearchParams } from 'react-router';
 import { useMemo, useRef } from 'react';
+import { useSearchParams } from 'react-router';
 
 export function RootPage() {
   const [sp] = useSearchParams();
