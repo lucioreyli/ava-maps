@@ -14,7 +14,7 @@ export function RootPage() {
     () => createFuzzySearch(maps, { key: 'name', strategy: 'aggressive' }),
     [],
   );
-  const data = React.useMemo(() => searcher(sp.get('s')), [sp, searcher]);
+  const data = React.useMemo(() => searcher(sp.get('s') || ''), [sp, searcher]);
 
   const isMobile = useIsMobile();
   const parentRef = React.useRef(null);
