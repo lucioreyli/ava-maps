@@ -16,18 +16,18 @@ enum MAP_TYPES {
   RAID = 1 << 8,
 }
 enum MTYPES {
-  TUNNEL_ROYAL = MAP_TYPES.ROYAL,
-  TUNNEL_ROYAL_RED = MAP_TYPES.ROYAL | MAP_TYPES.RED,
-  TUNNEL_BLACK_LOW = MAP_TYPES.BLACK | MAP_TYPES.LOW,
-  TUNNEL_BLACK_MEDIUM = MAP_TYPES.BLACK | MAP_TYPES.MEDIUM,
-  TUNNEL_BLACK_HIGH = MAP_TYPES.BLACK | MAP_TYPES.HIGH,
-  TUNNEL_LOW = MAP_TYPES.LOW,
-  TUNNEL_MEDIUM = MAP_TYPES.MEDIUM,
-  TUNNEL_HIGH = MAP_TYPES.HIGH,
-  TUNNEL_DEEP = MAP_TYPES.DEEP,
-  TUNNEL_DEEP_RAID = MAP_TYPES.DEEP | MAP_TYPES.RAID,
-  TUNNEL_HIDEOUT = MAP_TYPES.HIDEOUT,
-  TUNNEL_HIDEOUT_DEEP = MAP_TYPES.HIDEOUT | MAP_TYPES.DEEP,
+  TUNNEL_ROYAL = 1,
+  TUNNEL_ROYAL_RED = 3,
+  TUNNEL_BLACK_LOW = 20,
+  TUNNEL_BLACK_MEDIUM = 36,
+  TUNNEL_BLACK_HIGH = 68,
+  TUNNEL_LOW = 16,
+  TUNNEL_MEDIUM = 32,
+  TUNNEL_HIGH = 64,
+  TUNNEL_DEEP = 128,
+  TUNNEL_DEEP_RAID = 384,
+  TUNNEL_HIDEOUT = 8,
+  TUNNEL_HIDEOUT_DEEP = 136,
 }
 
 const mapSchema = z.object({
@@ -37,7 +37,10 @@ const mapSchema = z.object({
     .number()
     .positive()
     .refine((val) => [4, 6, 8].includes(val)), // level (tier)
-  b: z.boolean().optional(), //
+  b: z
+    .number()
+    .refine((v) => [0, 1].includes(v))
+    .optional(), // brecilien
 
   // chest
   cG: z.number().optional(), // green
@@ -60,7 +63,7 @@ const mapSchema = z.object({
 
 type Map = z.infer<typeof mapSchema>;
 
-const result: any[] = [];
+const result: Map[] = [];
 
 const generateMapType = (tierName: string): number => {
   return tierName.split('_').reduce((acc, curr) => {
@@ -99,7 +102,7 @@ for (const map of data) {
     n: map.name,
     t: mapType,
     l: Number(map.tier.charAt(1)),
-    b: !!map.brecilien || undefined,
+    b: map.brecilien || undefined,
     d: Object.entries(payload)
       .flatMap((d) => (!d[1] ? [] : d.join('')))
       .join(','),
