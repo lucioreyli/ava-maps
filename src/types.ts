@@ -1,39 +1,14 @@
+/*
+Diagnostics:
+1. Conversion of type '({ n: string; t: number; l: number; d: string; b?: undefined; } | { n: string; t: number; l: number; b: number; d: string; })[]' to type 'AvaMap[]' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.
+     Type '{ n: string; t: number; l: number; d: string; b?: undefined; } | { n: string; t: number; l: number; b: number; d: string; }' is not comparable to type 'AvaMap'.
+       Type '{ n: string; t: number; l: number; b: number; d: string; }' is not comparable to type 'AvaMap'.
+         Type '{ n: string; t: number; l: number; b: number; d: string; }' is missing the following properties from type 'Record<"cB" | "cG" | "cHG" | "cLG" | "dA" | "dG" | "dS" | "rF" | "rH" | "rO" | "rR" | "rW", number | undefined>': cB, cG, cHG, cLG, and 8 more. [2352]
+	* */
 export type AvaMap = {
-  name: string;
-  tier: 'T4' | 'T6' | 'T8';
-  type:
-    | 'TUNNEL_ROYAL'
-    | 'TUNNEL_ROYAL_RED'
-    | 'TUNNEL_BLACK_LOW'
-    | 'TUNNEL_BLACK_MEDIUM'
-    | 'TUNNEL_BLACK_HIGH'
-    | 'TUNNEL_DEEP'
-    | 'TUNNEL_LOW'
-    | 'TUNNEL_MEDIUM'
-    | 'TUNNEL_HIGH'
-    | 'TUNNEL_BLACK_LOW'
-    | 'TUNNEL_BLACK_MEDIUM'
-    | 'TUNNEL_BLACK_HIGH'
-    | 'TUNNEL_DEEP_RAID'
-    | 'TUNNEL_HIDEOUT'
-    | 'TUNNEL_HIDEOUT_DEEP';
-  chests: {
-    blue: number;
-    green: number;
-    highGold: number;
-    lowGold: number;
-  };
-  dungeons: {
-    solo: number;
-    group: number;
-    avalon: number;
-  };
-  resources: {
-    rock: number;
-    wood: number;
-    ore: number;
-    fiber: number;
-    hide: number;
-  };
-  brecilien: number;
+  n: string;
+  t: number;
+  l: 4 | 6 | 8;
+  b?: number;
+  d: string;
 };

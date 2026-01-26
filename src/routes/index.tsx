@@ -1,17 +1,20 @@
 import { MapItem } from '@/components/map-item.tsx';
 import { SearchMap } from '@/components/search-map';
-import { maps } from '@/constants/maps';
+import d from '@/constants/maps.json';
 import { useIsMobile } from '@/hooks/use-is-mobile.ts';
-import createFuzzySearch from '@nozbe/microfuzz';
+import type { AvaMap } from '@/types';
+import { createFuzzySearch } from '@mmmike/mikrofuzz';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { useMemo, useRef } from 'react';
 import { useSearchParams } from 'react-router';
+
+const maps = d as unknown as AvaMap[];
 
 export function RootPage() {
   const [sp] = useSearchParams();
   const term = sp.get('s') ?? '';
   const searcher = useMemo(
-    () => createFuzzySearch(maps, { key: 'name', strategy: 'aggressive' }),
+    () => createFuzzySearch(maps, { key: 'n', strategy: 'aggressive' }),
     [],
   );
   const data = useMemo(() => searcher(sp.get('s') || ''), [sp, searcher]);
@@ -36,11 +39,7 @@ export function RootPage() {
           No results for "{term}".
         </p>
       )}
-      <div
-        ref={parentRef}
-        // style={{ height: '100%', flex: 1, overflow: 'auto', width: '100%' }}
-        className="h-full overflow-auto w-full pb-12"
-      >
+      <div ref={parentRef} className="h-full overflow-auto w-full pb-12">
         <div
           style={{
             height: `${rowVirtualizer.getTotalSize()}px`,

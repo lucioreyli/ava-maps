@@ -4,7 +4,7 @@
     "enabled": true
   },
   "files": {
-    "ignore": ["src/routes/routeTree.gen.ts"]
+    "ignore": ["src/routes/routeTree.gen.ts", "src/constants/maps.json"]
   },
   "vcs": {
     "enabled": true,

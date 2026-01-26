@@ -12,7 +12,7 @@
     "preview": "rsbuild preview"
   },
   "dependencies": {
-    "@nozbe/microfuzz": "^1.0.0",
+    "@mmmike/mikrofuzz": "^0.1.0",
     "@radix-ui/react-dialog": "^1.1.14",
     "@radix-ui/react-slot": "^1.2.3",
     "@tanstack/react-virtual": "^3.13.10",
