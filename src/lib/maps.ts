@@ -12,14 +12,13 @@ export enum MAP_TYPES {
   RAID = 1 << 8,
 }
 
-export const normalizeType = (mapType: number): string => {
-  return Object.entries(MAP_TYPES).reduce((acc, [key, mt]) => {
+export const normalizeType = (mapType: number): string =>
+  Object.entries(MAP_TYPES).reduce((acc, [key, mt]) => {
     if (typeof mt === 'number' && mapType & mt) {
       return `${acc}_${key}`;
     }
     return acc;
   }, 'TUNNEL');
-};
 
 type ResourceK = `r${'F' | 'H' | 'O' | 'R' | 'W'}`;
 type ChestK = `c${'G' | 'B' | 'HG' | 'LG'}`;
@@ -27,12 +26,14 @@ type DungeonK = `d${'S' | 'G' | 'A'}`;
 
 type MapData = Partial<Record<ChestK | DungeonK | ResourceK, number>>;
 
-export const parseMapData = (data: string): MapData => {
-  // "cB1,cLG1,dS1,dG1,rO3,rW1"
-
+const regData = /([a-zA-Z]+)(\d+)/;
+export const parseMapData = (data: string): MapData =>
   data.split(',').reduce((acc: MapData, rawData: string) => {
+    const match = rawData.match(regData);
+    if (match) {
+      const [_, key, value] = match;
+      acc[key as keyof MapData] = Number(value);
+    }
+
     return acc;
   }, {});
-
-  return {};
-};

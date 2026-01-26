@@ -1,12 +1,12 @@
+import { createFuzzySearch } from '@mmmike/mikrofuzz';
+import { useVirtualizer } from '@tanstack/react-virtual';
+import { useMemo, useRef } from 'react';
+import { useSearchParams } from 'react-router';
 import { MapItem } from '@/components/map-item.tsx';
 import { SearchMap } from '@/components/search-map';
 import d from '@/constants/maps.json';
 import { useIsMobile } from '@/hooks/use-is-mobile.ts';
 import type { AvaMap } from '@/types';
-import { createFuzzySearch } from '@mmmike/mikrofuzz';
-import { useVirtualizer } from '@tanstack/react-virtual';
-import { useMemo, useRef } from 'react';
-import { useSearchParams } from 'react-router';
 
 const maps = d as unknown as AvaMap[];
 

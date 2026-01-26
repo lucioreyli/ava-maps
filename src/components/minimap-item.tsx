@@ -1,9 +1,12 @@
 import { Badge } from './ui/badge';
 
 export const MinimapItem = ({
-  stack,
+  stack = 0,
   itemName,
-}: { stack: number; itemName: string }) => (
+}: {
+  stack?: number;
+  itemName: string;
+}) => (
   <li className="relative">
     <Badge
       data-disabled={stack < 2}

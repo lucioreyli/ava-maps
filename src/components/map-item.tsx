@@ -1,3 +1,5 @@
+import { cva } from 'class-variance-authority';
+import { MapIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button.tsx';
 import {
   Dialog,
@@ -7,12 +9,10 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog.tsx';
+import { normalizeType, parseMapData } from '@/lib/maps';
 import { cn } from '@/lib/utils.ts';
 import type { AvaMap } from '@/types.ts';
-import { cva } from 'class-variance-authority';
-import { MapIcon } from 'lucide-react';
 import { MinimapItem } from './minimap-item';
-import { normalizeType } from '@/lib/maps';
 
 const mapTier = { 4: 'IV', 6: 'VI', 8: 'VIII' };
 
@@ -30,6 +30,7 @@ export const MapItem = ({
   map,
   style,
 }: { map: AvaMap } & Pick<React.ComponentProps<'div'>, 'style'>) => {
+  const data = parseMapData(map.d);
   return (
     <Dialog>
       <div className={cn(itemStyle({ tier: map.l }))} style={style}>
@@ -62,11 +63,11 @@ export const MapItem = ({
               Resources
             </span>
             <ul className="flex">
-              <MinimapItem itemName="hide" stack={0} />
-              <MinimapItem itemName="fiber" stack={0} />
-              <MinimapItem itemName="wood" stack={0} />
-              <MinimapItem itemName="ore" stack={0} />
-              <MinimapItem itemName="rock" stack={0} />
+              <MinimapItem itemName="hide" stack={data.rH} />
+              <MinimapItem itemName="fiber" stack={data.rF} />
+              <MinimapItem itemName="wood" stack={data.rW} />
+              <MinimapItem itemName="ore" stack={data.rO} />
+              <MinimapItem itemName="rock" stack={data.rR} />
             </ul>
           </div>
           <div className="grid border p-2 rounded-sm bg-white/5">
@@ -74,9 +75,9 @@ export const MapItem = ({
               Dungeons
             </span>
             <ul className="flex gap-2">
-              <MinimapItem stack={0} itemName="dg-solo" />
-              <MinimapItem stack={0} itemName="dg-group" />
-              <MinimapItem stack={0} itemName="dg-ava" />
+              <MinimapItem stack={data.dS} itemName="dg-solo" />
+              <MinimapItem stack={data.dG} itemName="dg-group" />
+              <MinimapItem stack={data.dA} itemName="dg-ava" />
             </ul>
           </div>
           <div className="grid border p-2 rounded-sm bg-white/5">
@@ -84,9 +85,12 @@ export const MapItem = ({
               Chests
             </span>
             <ul className="flex gap-2">
-              <MinimapItem stack={0} itemName="green-chest" />
-              <MinimapItem stack={0} itemName="blue-chest" />
-              <MinimapItem stack={0} itemName="gold-chest" />
+              <MinimapItem stack={data.cG} itemName="green-chest" />
+              <MinimapItem stack={data.cB} itemName="blue-chest" />
+              <MinimapItem
+                stack={(data.cHG || 0) + (data.cLG || 0)}
+                itemName="gold-chest"
+              />
             </ul>
           </div>
 
@@ -95,7 +99,7 @@ export const MapItem = ({
               Extras
             </span>
             <ul className="flex gap-2">
-              <MinimapItem stack={1} itemName="brecilien" />
+              <MinimapItem stack={map.b} itemName="brecilien" />
             </ul>
           </div>
           <DialogTrigger asChild>
