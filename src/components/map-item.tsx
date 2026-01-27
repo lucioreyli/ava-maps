@@ -51,7 +51,7 @@ export const MapItem = ({
             <DialogTitle>{map.n}</DialogTitle>
             <DialogDescription>{mapType}</DialogDescription>
             <img
-              src={`./maps/${map.n.toLowerCase()}.png`}
+              src={`./maps/${map.n.toLowerCase()}.webp`}
               alt="map"
               className="w-full h-full rounded-sm"
               loading="eager"

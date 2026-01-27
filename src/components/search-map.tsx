@@ -1,6 +1,6 @@
-import { useLayoutEffect, useRef } from 'react';
+import { useCallback, useLayoutEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router';
-import { Input } from './ui/input.tsx';
+import { cn } from '@/lib/utils.ts';
 
 export const SearchMap = () => {
   const [sp, setSp] = useSearchParams();
@@ -17,16 +17,26 @@ export const SearchMap = () => {
     return () => window.removeEventListener('keypress', search);
   }, []);
 
+  const handleSearch = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const txt = e.target.value;
+      setSp(txt ? { s: txt } : {});
+    },
+    [setSp],
+  );
+
   return (
-    <Input
+    <input
       ref={inputRef}
       defaultValue={sp.get('s') ?? undefined}
       type="search"
       placeholder="Search avalon name..."
-      onChange={(e) => {
-        const txt = e.target.value;
-        setSp(txt ? { s: txt } : {});
-      }}
+      onChange={handleSearch}
+      data-slot="input"
+      className={cn(
+        'placeholder:text-muted-foreground selection:bg-primary selection:text-primary-foreground bg-input/30 border-input flex h-9 w-full min-w-0 rounded-md border px-3 py-1 text-base shadow-xs transition-[color,box-shadow] outline-none md:text-sm',
+        'focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]',
+      )}
     />
   );
 };
