@@ -18,17 +18,15 @@ export const SearchMap = () => {
   }, []);
 
   return (
-    <div className="flex gap-1.5">
-      <Input
-        ref={inputRef}
-        defaultValue={sp.get('s') ?? undefined}
-        type="search"
-        placeholder="Search avalon name..."
-        onChange={(e) => {
-          const txt = e.target.value;
-          setSp(txt ? { s: txt } : {});
-        }}
-      />
-    </div>
+    <Input
+      ref={inputRef}
+      defaultValue={sp.get('s') ?? undefined}
+      type="search"
+      placeholder="Search avalon name..."
+      onChange={(e) => {
+        const txt = e.target.value;
+        setSp(txt ? { s: txt } : {});
+      }}
+    />
   );
 };

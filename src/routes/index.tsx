@@ -9,20 +9,17 @@ import { useIsMobile } from '@/hooks/use-is-mobile';
 import type { AvaMap } from '@/types';
 
 const maps = d as unknown as AvaMap[];
+const searcher = createFuzzySearch(maps, { key: 'n' });
 
 export function RootPage() {
   const [sp] = useSearchParams();
-  const term = sp.get('s') ?? '';
-  const searcher = useMemo(
-    () => createFuzzySearch(maps, { key: 'n', strategy: 'aggressive' }),
-    [],
-  );
-  const data = useMemo(() => searcher(sp.get('s') || ''), [sp, searcher]);
+  const term = useMemo(() => sp.get('s') ?? '', [sp]);
+  const data = useMemo(() => searcher(term), [term]);
 
   const isMobile = useIsMobile();
   const parentRef = useRef(null);
   const rowVirtualizer = useVirtualizer({
-    count: term ? data.length : maps.length,
+    count: (term ? data : maps).length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => (isMobile ? 300 : 160),
   });
