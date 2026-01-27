@@ -25,7 +25,7 @@ export function RootPage() {
     count: term ? data.length : maps.length,
     getScrollElement: () => parentRef.current,
     estimateSize: () => (isMobile ? 300 : 160),
-    overscan: 5,
+    // overscan: 5,
   });
 
   return (

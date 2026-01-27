@@ -96,6 +96,7 @@ for (const map of data) {
     rF: map.resources.fiber,
     rH: map.resources.hide,
     rO: map.resources.ore,
+    rR: map.resources.rock,
     rW: map.resources.wood,
   };
   const m: Pick<Map, 'n' | 't' | 'l' | 'b'> & { d: string } = {
