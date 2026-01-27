@@ -31,6 +31,7 @@ export const MapItem = ({
   style,
 }: { map: AvaMap } & Pick<React.ComponentProps<'div'>, 'style'>) => {
   const data = parseMapData(map.d);
+  const mapType = normalizeType(map.t);
   return (
     <Dialog>
       <div className={cn(itemStyle({ tier: map.l }))} style={style}>
@@ -38,17 +39,19 @@ export const MapItem = ({
           <p className="font-medium">
             {map.n} ({mapTier[map.l]})
             <span className="text-xs text-muted-foreground block">
-              {normalizeType(map.t)}
+              {mapType}
             </span>
           </p>
-          <Button variant="outline" className="my-auto md:hidden">
-            <MapIcon />
+          <Button asChild variant="outline" className="my-auto md:hidden">
+            <div>
+              <MapIcon />
+            </div>
           </Button>
         </DialogTrigger>
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{map.n}</DialogTitle>
-            <DialogDescription>{map.t}</DialogDescription>
+            <DialogDescription>{mapType}</DialogDescription>
             <img
               src={`./maps/${map.n.toLowerCase()}.png`}
               alt="map"
