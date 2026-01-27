@@ -8,7 +8,7 @@ export const SearchMap = () => {
 
   useLayoutEffect(() => {
     const search = (ev: KeyboardEvent) => {
-      if (ev.key === '/' && document.activeElement === document.body) {
+      if (ev.key === '/' && document.activeElement !== inputRef.current) {
         inputRef.current?.focus();
         ev.preventDefault();
       }
