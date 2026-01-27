@@ -1,5 +1,5 @@
 import { cva } from 'class-variance-authority';
-import { MapIcon } from 'lucide-react';
+import { MapIcon } from '@/assets/map-icon';
 import { Button } from '@/components/ui/button.tsx';
 import {
   Dialog,
@@ -43,9 +43,7 @@ export const MapItem = ({
             </span>
           </p>
           <Button asChild variant="outline" className="my-auto md:hidden">
-            <div>
-              <MapIcon />
-            </div>
+            {MapIcon}
           </Button>
         </DialogTrigger>
         <DialogContent>
@@ -107,7 +105,7 @@ export const MapItem = ({
           </div>
           <DialogTrigger asChild>
             <Button variant="outline" className="my-auto max-md:hidden">
-              <MapIcon />
+              {MapIcon}
             </Button>
           </DialogTrigger>
         </div>
