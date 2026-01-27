@@ -1,24 +1,22 @@
-export enum MAP_TYPES {
-  ROYAL = 1 << 0,
-  RED = 1 << 1,
-  BLACK = 1 << 2,
-  HIDEOUT = 1 << 3,
+const MapTypes = {
+  ROYAL: 1 << 0,
+  RED: 1 << 1,
+  BLACK: 1 << 2,
+  HIDEOUT: 1 << 3,
 
-  LOW = 1 << 4,
-  MEDIUM = 1 << 5,
-  HIGH = 1 << 6,
-  DEEP = 1 << 7,
+  LOW: 1 << 4,
+  MEDIUM: 1 << 5,
+  HIGH: 1 << 6,
+  DEEP: 1 << 7,
 
-  RAID = 1 << 8,
-}
+  RAID: 1 << 8,
+};
 
 export const normalizeType = (mapType: number): string =>
-  Object.entries(MAP_TYPES).reduce((acc, [key, mt]) => {
-    if (typeof mt === 'number' && mapType & mt) {
-      return `${acc}_${key}`;
-    }
-    return acc;
-  }, 'TUNNEL');
+  Object.entries(MapTypes).reduce(
+    (acc, [key, mt]) => (mapType & mt ? `${acc}_${key}` : acc),
+    'TUNNEL',
+  );
 
 type ResourceK = `r${'F' | 'H' | 'O' | 'R' | 'W'}`;
 type ChestK = `c${'G' | 'B' | 'HG' | 'LG'}`;
@@ -34,6 +32,5 @@ export const parseMapData = (data: string): MapData =>
       const [_, key, value] = match;
       acc[key as keyof MapData] = Number(value);
     }
-
     return acc;
   }, {});

@@ -33,7 +33,7 @@ jobs:
         run: bun run build
 
       - name: Check Typescript
-        run: bun tsc
+        run: bun tsc -b
 
       - name: Check Biome
         run: bun run check
