@@ -1,5 +1,7 @@
 import { cva } from 'class-variance-authority';
+import React, { Suspense } from 'react';
 import { MapIcon } from '@/assets/map-icon';
+import { SpinnerIcon } from '@/assets/spinner-icon';
 import { Button } from '@/components/ui/button.tsx';
 import {
   Dialog,
@@ -10,8 +12,6 @@ import { normalizeType, parseMapData } from '@/lib/maps';
 import { cn } from '@/lib/utils.ts';
 import type { AvaMap } from '@/types.ts';
 import { MinimapItem } from './minimap-item';
-import React, { Suspense } from 'react';
-import { SpinnerIcon } from '@/assets/spinner-icon';
 
 const MapContainer = React.lazy(() =>
   import('./map-container').then((m) => ({ default: m.MapContainer })),
