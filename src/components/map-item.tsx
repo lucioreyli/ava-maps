@@ -4,15 +4,18 @@ import { Button } from '@/components/ui/button.tsx';
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog.tsx';
 import { normalizeType, parseMapData } from '@/lib/maps';
 import { cn } from '@/lib/utils.ts';
 import type { AvaMap } from '@/types.ts';
 import { MinimapItem } from './minimap-item';
+import React, { Suspense } from 'react';
+import { SpinnerIcon } from '@/assets/spinner-icon';
+
+const MapContainer = React.lazy(() =>
+  import('./map-container').then((m) => ({ default: m.MapContainer })),
+);
 
 const mapTier = { 4: 'IV', 6: 'VI', 8: 'VIII' };
 
@@ -47,16 +50,11 @@ export const MapItem = ({
           </Button>
         </DialogTrigger>
         <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{map.n}</DialogTitle>
-            <DialogDescription>{mapType}</DialogDescription>
-            <img
-              src={`./maps/${map.n.toLowerCase()}.webp`}
-              alt="map"
-              className="w-full h-full rounded-sm"
-              loading="eager"
-            />
-          </DialogHeader>
+          <Suspense
+            fallback={<SpinnerIcon className="w-5 h-5 mx-auto animate-spin" />}
+          >
+            <MapContainer map={map} mapType={mapType} />
+          </Suspense>
         </DialogContent>
         <div className="ml-auto grid grid-cols-2 md:inline-flex gap-1.5">
           <div className="grid border p-2 rounded-sm bg-white/5">
