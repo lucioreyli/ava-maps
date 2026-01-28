@@ -1,5 +1,3 @@
-import { Badge } from './ui/badge';
-
 export const MinimapItem = ({
   stack = 0,
   itemName,
@@ -8,12 +6,12 @@ export const MinimapItem = ({
   itemName: string;
 }) => (
   <li className="relative">
-    <Badge
+    <span
       data-disabled={stack < 2}
-      className="data-[disabled=true]:hidden absolute top-1 right-1 h-5 min-w-5 rounded-full px-1 tabular-nums"
+      className="text-primary-foreground bg-primary text-xs font-medium data-[disabled=true]:hidden absolute top-1 right-1 rounded-full border w-fit min-w-5 h-5 text-center content-center"
     >
       {stack}
-    </Badge>
+    </span>
     <img
       src={`./assets/${itemName}.webp`}
       alt={itemName}
