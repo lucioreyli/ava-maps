@@ -2,7 +2,6 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-
 @theme {
   --font-geist: "Geist", sans-serif;
 }
